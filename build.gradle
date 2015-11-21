@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'fr.inria.gforge.spoon:spoon-core:4.4.1'
 }
 
 jar {
