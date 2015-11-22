@@ -30,4 +30,10 @@ public abstract class Violation {
      * Prints the violation in a human readable format
      */
     public abstract String print();
+
+    /**
+     *
+     * @return a recommendation for how to fix such violations.
+     */
+    public abstract String recommendation();
 }

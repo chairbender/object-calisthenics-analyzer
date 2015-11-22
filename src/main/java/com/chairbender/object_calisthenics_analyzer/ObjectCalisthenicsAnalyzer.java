@@ -1,5 +1,6 @@
 package com.chairbender.object_calisthenics_analyzer;
 
+import com.chairbender.object_calisthenics_analyzer.adapter.NoElseKeywordVisitorAdapter;
 import com.chairbender.object_calisthenics_analyzer.adapter.SingleLevelOfIndentationVisitorAdapter;
 import com.chairbender.object_calisthenics_analyzer.violation.ViolationMonitor;
 import com.github.javaparser.JavaParser;
@@ -14,8 +15,8 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Main class for the application. Lets one invoke the analyzer programatically.
- *
+ * Main class for the application. Lets one invoke the analyzer from the command line. Also lets one invoke
+ * the main logic for this analyzer as a Java API using the "analyze()" method.
  *
  * Created by chairbender on 11/21/2015.
  */
@@ -33,8 +34,22 @@ public class ObjectCalisthenicsAnalyzer {
      *
      */
     public static void main(String[] args) throws IOException, ParseException {
+        ViolationMonitor violations = analyze(new File(args[0]));
+        //list the violations
+        violations.printViolations(System.out);
+    }
+
+    /**
+     * @param rootSourcePath path of the root folder holding the Java source code (i.e. the
+     *      folder holding the root-level package. For example,
+     *      if I have src/main/java/com/example/Example.java, this
+     *      argument should be the path to the "java" folder)
+     *
+     * @return the analysis of the provided java project
+     */
+    public static ViolationMonitor analyze(File rootSourcePath) throws IOException, ParseException {
         Collection<File> files = FileUtils.listFiles(
-                new File(args[0]),
+                rootSourcePath,
                 new RegexFileFilter("^(.*?)"),
                 DirectoryFileFilter.DIRECTORY
         );
@@ -42,8 +57,9 @@ public class ObjectCalisthenicsAnalyzer {
         for (File toProcess : files) {
             CompilationUnit compilationUnit = JavaParser.parse(toProcess);
             new SingleLevelOfIndentationVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
+            new NoElseKeywordVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
         }
-        //list the violations
-        violationMonitor.printViolations(System.out);
+
+        return violationMonitor;
     }
 }
