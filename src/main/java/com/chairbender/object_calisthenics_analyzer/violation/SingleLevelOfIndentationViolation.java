@@ -1,7 +1,6 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
-import com.chairbender.object_calisthenics_analyzer.util.AncestorUtils;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.chairbender.object_calisthenics_analyzer.util.MessageUtils;
 import com.github.javaparser.ast.stmt.Statement;
 
 import java.io.File;
@@ -26,13 +25,7 @@ public class SingleLevelOfIndentationViolation extends Violation {
 
     @Override
     public String print() {
-        //determine the package and class in which the violation occurred by going up from the
-        //violating statement node until we reach the class node and others like it
-        String fullyQualifiedClassName = AncestorUtils.getFullyQualifiedClassName(violatingStatement);
-
-
-        return "More than one level of indentation per method in " + fullyQualifiedClassName + "(" +
-                getFile().getName() + ":" + violatingStatement.getBeginLine() + ")";
+        return "More than one level of indentation per method in " + MessageUtils.getFullyQualifiedViolationLocation(getFile(),violatingStatement);
     }
 
 

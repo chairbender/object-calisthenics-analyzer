@@ -6,19 +6,22 @@ import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.stmt.Statement;
 
+import java.io.File;
+
 /**
- * Methods for finding out information about node's ancestors
- *
+ * Methods for formatting messages
  * Created by chairbender on 11/21/2015.
  */
-public abstract class AncestorUtils {
+public abstract class MessageUtils {
 
     /**
      *
+     * @param fileName file the violation occurred in
      * @param statement statement to get the fully qualified class name for
-     * @return the fully qualified class name of the class the statement appears in
+     * @return a string with the fully qualified class name of the class the statement appears in and the file
+     *      name and line number of the violation in paranthesese (just like you see with a stack trace)
      */
-    public static String getFullyQualifiedClassName(Statement statement) {
+    public static String getFullyQualifiedViolationLocation(File fileName, Statement statement) {
 
         //explore ancestors until we get to the class
         Node currentNode = statement;
@@ -32,7 +35,9 @@ public abstract class AncestorUtils {
         }
 
         PackageDeclaration currentPackageDeclaration = ((CompilationUnit)currentNode).getPackage();
+        String fullyQualifiedClassName = currentPackageDeclaration.getName().toString() + "." + className;
 
-        return currentPackageDeclaration.getName().toString() + "." + className;
+
+        return fullyQualifiedClassName + "(" + fileName.getName() + ":" + statement.getBeginLine() + ")";
     }
 }
