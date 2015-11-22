@@ -1,7 +1,17 @@
 package com.chairbender.object_calisthenics_analyzer;
 
-import com.chairbender.object_calisthenics_analyzer.processor.SingleLevelOfIndentationProcessor;
-import spoon.Launcher;
+import com.chairbender.object_calisthenics_analyzer.adapter.SingleLevelOfIndentationVisitorAdapter;
+import com.chairbender.object_calisthenics_analyzer.violation.ViolationMonitor;
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseException;
+import com.github.javaparser.ast.CompilationUnit;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Main class for the application. Lets one invoke the analyzer programatically.
@@ -13,7 +23,7 @@ public class ObjectCalisthenicsAnalyzer {
 
     /**
      * Analyzes a Java application. Returns the line numbers of specific
-     * violations of object calisthenics.
+     * violation of object calisthenics.
      *
      * @param args
      *  0 - path of the root folder holding the Java source code (i.e. the
@@ -22,10 +32,18 @@ public class ObjectCalisthenicsAnalyzer {
      *      argument should be the path to the "java" folder)
      *
      */
-    public static void main(String[] args) {
-        Launcher spoon = new Launcher();
-        spoon.addInputResource(args[0]);
-        spoon.addProcessor(new SingleLevelOfIndentationProcessor());
-        spoon.run();
+    public static void main(String[] args) throws IOException, ParseException {
+        Collection<File> files = FileUtils.listFiles(
+                new File(args[0]),
+                new RegexFileFilter("^(.*?)"),
+                DirectoryFileFilter.DIRECTORY
+        );
+        ViolationMonitor violationMonitor = new ViolationMonitor();
+        for (File toProcess : files) {
+            CompilationUnit compilationUnit = JavaParser.parse(toProcess);
+            new SingleLevelOfIndentationVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
+        }
+        //list the violations
+        violationMonitor.printViolations(System.out);
     }
 }
