@@ -17,14 +17,14 @@ public abstract class MessageUtils {
     /**
      *
      * @param fileName file the violation occurred in
-     * @param statement statement to get the fully qualified class name for
-     * @return a string with the fully qualified class name of the class the statement appears in and the file
+     * @param node node to get the fully qualified class name for
+     * @return a string with the fully qualified class name of the class the node appears in and the file
      *      name and line number of the violation in paranthesese (just like you see with a stack trace)
      */
-    public static String getFullyQualifiedViolationLocation(File fileName, Statement statement) {
+    public static String getFullyQualifiedViolationLocation(File fileName, Node node) {
 
         //explore ancestors until we get to the class
-        Node currentNode = statement;
+        Node currentNode = node;
         while (!(currentNode instanceof ClassOrInterfaceDeclaration)) {
             currentNode = currentNode.getParentNode();
         }
@@ -38,6 +38,6 @@ public abstract class MessageUtils {
         String fullyQualifiedClassName = currentPackageDeclaration.getName().toString() + "." + className;
 
 
-        return fullyQualifiedClassName + "(" + fileName.getName() + ":" + statement.getBeginLine() + ")";
+        return fullyQualifiedClassName + "(" + fileName.getName() + ":" + node.getBeginLine() + ")";
     }
 }

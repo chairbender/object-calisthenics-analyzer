@@ -1,5 +1,7 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
+import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
+
 import java.io.File;
 
 /**
@@ -7,7 +9,7 @@ import java.io.File;
  *
  * Created by chairbender on 11/21/2015.
  */
-public abstract class Violation {
+public abstract class Violation{
     private File inFile;
 
     /**
@@ -17,6 +19,11 @@ public abstract class Violation {
     public Violation(File inFile) {
         this.inFile = inFile;
     }
+
+    /**
+     * @return the information on the rule being violated.
+     */
+    public abstract RuleInfo getRuleInfo();
 
     /**
      *
@@ -29,11 +36,6 @@ public abstract class Violation {
     /**
      * Prints the violation in a human readable format
      */
-    public abstract String print();
+    public abstract String getViolationLocation();
 
-    /**
-     *
-     * @return a recommendation for how to fix such violations.
-     */
-    public abstract String recommendation();
 }

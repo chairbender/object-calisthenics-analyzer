@@ -2,6 +2,7 @@ package com.chairbender.object_calisthenics_analyzer;
 
 import com.chairbender.object_calisthenics_analyzer.adapter.NoElseKeywordVisitorAdapter;
 import com.chairbender.object_calisthenics_analyzer.adapter.SingleLevelOfIndentationVisitorAdapter;
+import com.chairbender.object_calisthenics_analyzer.adapter.WrapAllPrimitivesAndStringsVisitorAdapter;
 import com.chairbender.object_calisthenics_analyzer.violation.ViolationMonitor;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
@@ -58,6 +59,7 @@ public class ObjectCalisthenicsAnalyzer {
             CompilationUnit compilationUnit = JavaParser.parse(toProcess);
             new SingleLevelOfIndentationVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
             new NoElseKeywordVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
+            new WrapAllPrimitivesAndStringsVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
         }
 
         return violationMonitor;

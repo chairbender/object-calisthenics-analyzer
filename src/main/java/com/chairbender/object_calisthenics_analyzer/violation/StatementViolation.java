@@ -25,7 +25,8 @@ public abstract class StatementViolation extends Violation{
      *
      * @return a string representing the exact location of the violation
      */
-    protected String getViolationStatementLocation() {
+    @Override
+    public String getViolationLocation() {
         return MessageUtils.getFullyQualifiedViolationLocation(getFile(),violatingStatement);
     }
 }

@@ -1,9 +1,7 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Listens for and stores all of the violation of a given
@@ -13,7 +11,7 @@ import java.util.List;
  * Created by chairbender on 11/21/2015.
  */
 public class ViolationMonitor {
-    List<Violation> violationList = new LinkedList<>();
+    Map<Class<? extends Violation>,List<Violation>> violationList = new HashMap<>();
 
 
     /**
@@ -22,7 +20,10 @@ public class ViolationMonitor {
      * @param toReport violation to report
      */
     public void reportViolation(Violation toReport) {
-        violationList.add(toReport);
+        if (!violationList.containsKey(toReport.getClass())) {
+            violationList.put(toReport.getClass(),new LinkedList<>());
+        }
+        violationList.get(toReport.getClass()).add(toReport);
     }
 
     /**
@@ -31,8 +32,12 @@ public class ViolationMonitor {
      * @param out printstream to pretty print a list of violations
      */
     public void printViolations(PrintStream out) {
-        for (Violation violation : violationList) {
-            out.println(violation.print());
+        for (Class<? extends Violation> violationType : violationList.keySet()) {
+            Violation aViolation = violationList.get(violationType).get(0);
+            out.println(aViolation.getRuleInfo().describe());
+            for (Violation violation : violationList.get(violationType)) {
+                out.println("\t" + violation.getViolationLocation());
+            }
         }
     }
 }
