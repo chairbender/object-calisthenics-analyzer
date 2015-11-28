@@ -44,7 +44,8 @@ public class ObjectCalisthenicsAnalyzer {
      * @param file path of a folder holding Java source code to be analyzed, which will be recursively
      *                       explored and each Java file will be analyzed. Or, a path to a single Java file to analyze.
      * @param encoding encoding to use for reading the file
-     *
+     * @throws IOException if error occurs reading the file
+     * @throws ParseException if error occurs parsing the source code
      * @return the analysis of the provided java project
      */
     public static ViolationMonitor analyze(File file, String encoding) throws IOException, ParseException {
@@ -71,7 +72,8 @@ public class ObjectCalisthenicsAnalyzer {
     /**
      * @param inputStream input stream representing a Java source file to analyze.
      * @param encoding encoding to use when reading the file.
-     *
+     * @throws IOException if error occurs reading the file
+     * @throws ParseException if error occurs parsing the source code
      * @return the analysis of the provided java file
      */
     public static ViolationMonitor analyze(InputStream inputStream, String encoding) throws IOException, ParseException {
@@ -82,7 +84,8 @@ public class ObjectCalisthenicsAnalyzer {
 
     /**
      * @param reader reader representing a Java source file to analyze.
-     *
+     * @throws IOException if error occurs reading the file
+     * @throws ParseException if error occurs parsing the source code
      * @return the analysis of the provided java file
      */
     public static ViolationMonitor analyze(Reader reader) throws IOException, ParseException {
