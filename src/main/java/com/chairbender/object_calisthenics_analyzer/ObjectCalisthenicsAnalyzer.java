@@ -60,6 +60,7 @@ public class ObjectCalisthenicsAnalyzer {
             new WrapAllPrimitivesAndStringsVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
             new FirstClassCollectionsVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
             new OneDotPerLineVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
+            new SmallEntitiesVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
         }
 
         return violationMonitor;
