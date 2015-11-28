@@ -2,7 +2,7 @@
 
 A tool for analyzing Java code for its adherence to [Object Calisthenics](http://www.cs.helsinki.fi/u/luontola/tdd-2009/ext/ObjectCalisthenics.pdf).
 
-(JavaDoc Documentation)[http://chairbender.github.io/object-calisthenics-analyzer/]
+[JavaDoc Documentation](http://chairbender.github.io/object-calisthenics-analyzer/)
 
 ## Usage
 ````
@@ -22,7 +22,8 @@ Node violationLocation = aViolation.getViolationLocation()
 ````
 
 ## Documentation
-(JavaDoc Documentation)[http://chairbender.github.io/object-calisthenics-analyzer/]
+
+[JavaDoc Documentation](http://chairbender.github.io/object-calisthenics-analyzer/)
 
 ## Stuff It Won't Find For You
 For various reasons, there's a few things mentioned in Object Calisthenics that this program doesn't check for.
