@@ -63,6 +63,6 @@ public class FirstClassCollectionsVisitorAdapter extends CalisthenicsVisitorAdap
             }
         }
 
-
+        super.visit(classOrInterfaceDeclaration,arg);
     }
 }

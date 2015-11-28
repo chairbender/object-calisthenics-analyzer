@@ -61,7 +61,7 @@ public class WrapAllPrimitivesAndStringsVisitorAdapter extends CalisthenicsVisit
                 }
             }
         }
-
+        super.visit(classOrInterfaceDeclaration,arg);
 
     }
 }

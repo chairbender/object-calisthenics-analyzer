@@ -14,8 +14,8 @@ import java.util.List;
 
 
 /**
- * Checks that there is a single level of indentation per method. All
- * instances
+ * Checks that there is a single level of indentation per method.
+ * We're not counting synchronized blocks or try statements.
  *
  * Created by chairbender on 11/21/2015.
  */
@@ -52,10 +52,12 @@ public class SingleLevelOfIndentationVisitorAdapter extends CalisthenicsVisitorA
                     reportExcessiveIndentation(((ForeachStmt)statement).getBody());
                 } else if (statement instanceof ForStmt) {
                     reportExcessiveIndentation(((ForStmt)statement).getBody());
+                }  else if (statement instanceof DoStmt) {
+                    reportExcessiveIndentation(((DoStmt)statement).getBody());
                 }
             }
         }
-
+        super.visit(methodDeclaration,arg);
 
     }
 

@@ -27,19 +27,26 @@ public class NoElseKeywordVisitorAdapter extends CalisthenicsVisitorAdapter{
     }
 
     @Override
-    public void visit(MethodDeclaration methodDeclaration, Object arg) {
-        if (methodDeclaration.getBody() != null) {
-            for (Statement statement : methodDeclaration.getBody().getStmts()) {
-                if (statement instanceof IfStmt) {
-                    //report all else statements
-                    Statement currentIf = statement;
-                    while (currentIf != null && currentIf instanceof IfStmt) {
-                        if (((IfStmt)currentIf).getElseStmt() != null) {
-                            reportViolation(new NoElseStatementViolation(getFile(),((IfStmt)currentIf).getElseStmt()));
-                        }
-                        currentIf = ((IfStmt) currentIf).getElseStmt();
-                    }
+    public void visit(BlockStmt blockStmt, Object arg) {
+        for (Statement statement : blockStmt.getStmts()) {
+            checkStatement(statement);
+        }
+        super.visit(blockStmt,arg);
+    }
+
+    /**
+     * Reports a violation if the statement violates the no else keyword rule.
+     * @param toCheck statement to check for violations
+     */
+    private void checkStatement(Statement toCheck) {
+        if (toCheck instanceof IfStmt) {
+            //report all else statements
+            Statement currentIf = toCheck;
+            while (currentIf != null && currentIf instanceof IfStmt) {
+                if (((IfStmt)currentIf).getElseStmt() != null) {
+                    reportViolation(new NoElseStatementViolation(getFile(),((IfStmt)currentIf).getElseStmt()));
                 }
+                currentIf = ((IfStmt) currentIf).getElseStmt();
             }
         }
     }
