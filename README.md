@@ -2,6 +2,8 @@
 
 A tool for analyzing Java code for its adherence to [Object Calisthenics](http://www.cs.helsinki.fi/u/luontola/tdd-2009/ext/ObjectCalisthenics.pdf).
 
+(JavaDoc Documentation)[http://chairbender.github.io/object-calisthenics-analyzer/]
+
 ## Usage
 ````
 //get all the violations
@@ -18,6 +20,9 @@ System.out.println(aViolation.getRuleInfo().describe());
 //other info about the location within the source code.
 Node violationLocation = aViolation.getViolationLocation()
 ````
+
+## Documentation
+(JavaDoc Documentation)[http://chairbender.github.io/object-calisthenics-analyzer/]
 
 ## Stuff It Won't Find For You
 For various reasons, there's a few things mentioned in Object Calisthenics that this program doesn't check for.
@@ -45,3 +50,6 @@ the payrollInfo member.
 So, figure out if a method is acting as a getter / setter, and try to design your code so you can TELL a class to
 do something instead of ASKing it for some data. Tell Employee to be paid (employee.pay()) instead of doing getSalary()
 and getBonus() and then calling BankAccount.setValue() with the value of that calculation. Tell, don't ask.
+
+## Contributing
+Please create issues to send me any suggestions you have for improving the API or any problems you encounter while using it.
