@@ -3,10 +3,21 @@
 A tool for analyzing Java code for its adherence to [Object Calisthenics](http://www.cs.helsinki.fi/u/luontola/tdd-2009/ext/ObjectCalisthenics.pdf).
 
 ## Usage
-''''
-ViolationMonitor violationMonitor = ObjectCalisthenicsAnalyzer.analyze(new File("fileOrProjectFolderToAnalyze"),"UTF-8");
+````
+//get all the violations
+ViolationMonitor violationMonitor = 
+  ObjectCalisthenicsAnalyzer.analyze(new File("fileOrProjectFolderToAnalyze"),"UTF-8");
 List<Violation> violations = violations.getAllViolations();
-''''
+
+//print info about the specific violation (the rule and the suggestion for fixing it)
+Violation aViolation = violations.get(0);
+System.out.println(aViolation.getRuleInfo().describe());
+
+//gets the specific node in the source code where the violation occurred.
+//From this, you can print the line number of the violation and get all sorts of
+//other info about the location within the source code.
+Node violationLocation = aViolation.getViolationLocation()
+````
 
 ## Stuff It Won't Find For You
 For various reasons, there's a few things mentioned in Object Calisthenics that this program doesn't check for.
