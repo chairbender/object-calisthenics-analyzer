@@ -16,3 +16,15 @@ discouragement from creating adequately descriptive names.
 
 Currently, this program is designed so it can be run on individual Java source files in isolation. Eventually, 
 I could add support for parsing an entire Java project as an option. For now, check this one yourself.
+
+### Rule 9 - No getters/setters/properties
+It will detect some obvious getters / setters. However, it will still miss cases where a method is, effectively, a getter
+or setter, but does something other than simply setting or retrieving the value of a class member/field. For example,
+if I have an Employee who contains a PayrollInfo member and I have a method on Employee called getAnnualSalary which
+returns payrollInfo.getAnnualSalary(), effectively, that method is acting as a getter and violating the spirit
+of this rule, but the analyzer will miss it. It WOULD catch a method like Employee.getPayrollInfo() which simply returns
+the payrollInfo member.
+
+So, figure out if a method is acting as a getter / setter, and try to design your code so you can TELL a class to
+do something instead of ASKing it for some data. Tell Employee to be paid (employee.pay()) instead of doing getSalary()
+and getBonus() and then calling BankAccount.setValue() with the value of that calculation. Tell, don't ask.

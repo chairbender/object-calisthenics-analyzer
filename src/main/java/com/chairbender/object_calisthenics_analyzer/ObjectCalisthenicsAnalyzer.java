@@ -62,6 +62,7 @@ public class ObjectCalisthenicsAnalyzer {
             new OneDotPerLineVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
             new SmallEntitiesVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
             new TwoOrFewerFieldsVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
+            new NoGettersSettersVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
         }
 
         return violationMonitor;
