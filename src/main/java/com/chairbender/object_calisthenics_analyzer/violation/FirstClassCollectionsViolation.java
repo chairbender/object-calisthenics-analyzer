@@ -14,23 +14,16 @@ import java.io.File;
 public class FirstClassCollectionsViolation extends Violation {
     private static final RuleInfo ruleInfo = new RuleInfo("Create a class with a descriptive name to wrap this collection.",
             "Rule 4 - First class collections. Any class containing a collection should have no other members.");
-    private final FieldDeclaration violatingDeclaration;
 
-    /**@param inFile file in which the violation occurred
+    /**
      * @param violatingDeclaration the declaration violating the rule
      */
-    public FirstClassCollectionsViolation(File inFile, FieldDeclaration violatingDeclaration) {
-        super(inFile);
-        this.violatingDeclaration = violatingDeclaration;
+    public FirstClassCollectionsViolation(FieldDeclaration violatingDeclaration) {
+        super(violatingDeclaration);
     }
 
     @Override
     public RuleInfo getRuleInfo() {
         return ruleInfo;
-    }
-
-    @Override
-    public String getViolationLocation() {
-        return MessageUtils.getFullyQualifiedViolationLocation(getFile(),violatingDeclaration);
     }
 }

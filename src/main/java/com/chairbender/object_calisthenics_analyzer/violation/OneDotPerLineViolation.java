@@ -10,7 +10,7 @@ import java.io.File;
  *
  * Created by chairbender on 11/21/2015.
  */
-public class OneDotPerLineViolation extends StatementViolation {
+public class OneDotPerLineViolation extends Violation {
     private static final RuleInfo ruleInfo = new RuleInfo("If your object is dealing with two other objects at once, it knows about too many" +
             " other objects. Try moving the activity it is doing into one of those other objects.\n" +
             "If all the dots are connected, your object is digging deeply into another object, violating encapsulation." +
@@ -18,11 +18,11 @@ public class OneDotPerLineViolation extends StatementViolation {
             "Use the Law of Demeter (Only talk to your friends).",
             "Rule 5 - One dot per line.");
 
-    /**@param inFile file in which the violation occurred
+    /**
      * @param violatingStatement the statement violating the rule
      */
-    public OneDotPerLineViolation(File inFile, Statement violatingStatement) {
-        super(inFile, violatingStatement);
+    public OneDotPerLineViolation(Statement violatingStatement) {
+        super(violatingStatement);
     }
 
     @Override

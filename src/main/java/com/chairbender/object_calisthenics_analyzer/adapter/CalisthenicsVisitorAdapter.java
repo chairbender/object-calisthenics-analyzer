@@ -14,16 +14,13 @@ import java.io.File;
  */
 public abstract class CalisthenicsVisitorAdapter extends VoidVisitorAdapter{
     protected ViolationMonitor violationMonitor;
-    protected File file;
 
     /**
      *
      * @param violationMonitor violation monitor that violations will be reported to
-     * @param file file being visited
      */
-    public CalisthenicsVisitorAdapter(ViolationMonitor violationMonitor,File file) {
+    public CalisthenicsVisitorAdapter(ViolationMonitor violationMonitor) {
         this.violationMonitor = violationMonitor;
-        this.file = file;
     }
 
     /**
@@ -33,13 +30,5 @@ public abstract class CalisthenicsVisitorAdapter extends VoidVisitorAdapter{
      */
     protected void reportViolation(Violation toReport) {
         violationMonitor.reportViolation(toReport);
-    }
-
-    /**
-     *
-     * @return the file being examined
-     */
-    public File getFile() {
-        return file;
     }
 }

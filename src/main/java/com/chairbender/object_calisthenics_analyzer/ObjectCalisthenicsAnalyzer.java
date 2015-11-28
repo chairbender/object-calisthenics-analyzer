@@ -11,7 +11,11 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Main class for the application. Lets one invoke the analyzer from the command line. Also lets one invoke
@@ -26,45 +30,85 @@ public class ObjectCalisthenicsAnalyzer {
      * violation of object calisthenics.
      *
      * @param args
-     *  0 - path of the root folder holding the Java source code (i.e. the
-     *      folder holding the root-level package. For example,
-     *      if I have src/main/java/com/example/Example.java, this
-     *      argument should be the path to the "java" folder)
+     *  0 - path of a folder holding Java source code to be analyzed, which will be recursively
+     *      explored and each Java file will be analyzed. Or, a path to a single Java file to analyze.
      *
      */
     public static void main(String[] args) throws IOException, ParseException {
-        ViolationMonitor violations = analyze(new File(args[0]));
+        ViolationMonitor violations = analyze(new File(args[0]),"UTF-8");
         //list the violations
         violations.printViolations(System.out);
     }
 
     /**
-     * @param rootSourcePath path of the root folder holding the Java source code (i.e. the
-     *      folder holding the root-level package. For example,
-     *      if I have src/main/java/com/example/Example.java, this
-     *      argument should be the path to the "java" folder)
+     * @param file path of a folder holding Java source code to be analyzed, which will be recursively
+     *                       explored and each Java file will be analyzed. Or, a path to a single Java file to analyze.
+     * @param encoding encoding to use for reading the file
      *
      * @return the analysis of the provided java project
      */
-    public static ViolationMonitor analyze(File rootSourcePath) throws IOException, ParseException {
-        Collection<File> files = FileUtils.listFiles(
-                rootSourcePath,
-                new RegexFileFilter("^(.*?)"),
-                DirectoryFileFilter.DIRECTORY
-        );
+    public static ViolationMonitor analyze(File file, String encoding) throws IOException, ParseException {
+        Collection<File> files;
+        if (file.isDirectory()) {
+            files = FileUtils.listFiles(
+                    file,
+                    new RegexFileFilter("^(.*java?)"),
+                    DirectoryFileFilter.DIRECTORY
+            );
+        } else {
+            files = new HashSet<>();
+            files.add(file);
+        }
         ViolationMonitor violationMonitor = new ViolationMonitor();
         for (File toProcess : files) {
-            CompilationUnit compilationUnit = JavaParser.parse(toProcess);
-            new SingleLevelOfIndentationVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
-            new NoElseKeywordVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
-            new WrapAllPrimitivesAndStringsVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
-            new FirstClassCollectionsVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit,null);
-            new OneDotPerLineVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
-            new SmallEntitiesVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
-            new TwoOrFewerFieldsVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
-            new NoGettersSettersVisitorAdapter(violationMonitor,toProcess).visit(compilationUnit, null);
+            CompilationUnit compilationUnit = JavaParser.parse(toProcess,encoding,false);
+            visitAll(compilationUnit,violationMonitor);
         }
 
         return violationMonitor;
+    }
+
+    /**
+     * @param inputStream input stream representing a Java source file to analyze.
+     * @param encoding encoding to use when reading the file.
+     *
+     * @return the analysis of the provided java file
+     */
+    public static ViolationMonitor analyze(InputStream inputStream, String encoding) throws IOException, ParseException {
+        CompilationUnit compilationUnit = JavaParser.parse(inputStream,encoding,false);
+
+        return visitAll(compilationUnit,new ViolationMonitor());
+    }
+
+    /**
+     * @param reader reader representing a Java source file to analyze.
+     *
+     * @return the analysis of the provided java file
+     */
+    public static ViolationMonitor analyze(Reader reader) throws IOException, ParseException {
+        CompilationUnit compilationUnit = JavaParser.parse(reader,false);
+
+        return visitAll(compilationUnit,new ViolationMonitor());
+    }
+
+    /**
+     * Runs all analyses on the compilation unit and adds any reports to the specified violation monitor, toAdd.
+     * THIS WILL BE MODIFIED!
+     * @param compilationUnit unit to analyze
+     * @param toAdd violation monitor to add any reports to. Will be modified
+     * @return the violation monitor, now with any reports added to it.
+     *
+     */
+    private static ViolationMonitor visitAll(CompilationUnit compilationUnit,ViolationMonitor toAdd) {
+        new SingleLevelOfIndentationVisitorAdapter(toAdd).visit(compilationUnit,null);
+        new NoElseKeywordVisitorAdapter(toAdd).visit(compilationUnit,null);
+        new WrapAllPrimitivesAndStringsVisitorAdapter(toAdd).visit(compilationUnit,null);
+        new FirstClassCollectionsVisitorAdapter(toAdd).visit(compilationUnit,null);
+        new OneDotPerLineVisitorAdapter(toAdd).visit(compilationUnit, null);
+        new SmallEntitiesVisitorAdapter(toAdd).visit(compilationUnit, null);
+        new TwoOrFewerFieldsVisitorAdapter(toAdd).visit(compilationUnit, null);
+        new NoGettersSettersVisitorAdapter(toAdd).visit(compilationUnit, null);
+
+        return toAdd;
     }
 }

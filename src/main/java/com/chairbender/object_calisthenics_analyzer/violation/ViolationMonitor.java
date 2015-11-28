@@ -5,14 +5,13 @@ import java.util.*;
 
 /**
  * Listens for and stores all of the violation of a given
- * colletion of source code. Provides functionality for interacting with that
+ * collection of source code. Provides functionality for interacting with that
  * data.
  *
  * Created by chairbender on 11/21/2015.
  */
 public class ViolationMonitor {
-    Map<Class<? extends Violation>,List<Violation>> violationList = new HashMap<>();
-
+    private List<Violation> violationList = new LinkedList<>();
 
     /**
      * Logs a violation of the object calisthenics rules
@@ -20,10 +19,7 @@ public class ViolationMonitor {
      * @param toReport violation to report
      */
     public void reportViolation(Violation toReport) {
-        if (!violationList.containsKey(toReport.getClass())) {
-            violationList.put(toReport.getClass(),new LinkedList<>());
-        }
-        violationList.get(toReport.getClass()).add(toReport);
+        violationList.add(toReport);
     }
 
     /**
@@ -32,12 +28,17 @@ public class ViolationMonitor {
      * @param out printstream to pretty print a list of violations
      */
     public void printViolations(PrintStream out) {
-        for (Class<? extends Violation> violationType : violationList.keySet()) {
-            Violation aViolation = violationList.get(violationType).get(0);
-            out.println(aViolation.getRuleInfo().describe());
-            for (Violation violation : violationList.get(violationType)) {
-                out.println("\t" + violation.getViolationLocation());
-            }
+        for (Violation violation : violationList) {
+            out.println(violation.getRuleInfo().describe() + "\n\t" + violation.toString());
         }
+    }
+
+    /**
+     *
+     * @return the list of violations in the order they were reported. Do not
+     * modify this list.
+     */
+    public List<Violation> getAllViolations() {
+        return Collections.unmodifiableList(violationList);
     }
 }

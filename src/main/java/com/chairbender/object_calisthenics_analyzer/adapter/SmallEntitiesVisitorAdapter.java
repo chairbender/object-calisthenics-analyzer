@@ -16,17 +16,16 @@ public class SmallEntitiesVisitorAdapter extends CalisthenicsVisitorAdapter {
 
     /**
      * @param violationMonitor violation monitor that violations will be reported to
-     * @param file             file being visited
      */
-    public SmallEntitiesVisitorAdapter(ViolationMonitor violationMonitor, File file) {
-        super(violationMonitor, file);
+    public SmallEntitiesVisitorAdapter(ViolationMonitor violationMonitor) {
+        super(violationMonitor);
     }
 
     @Override
     public void visit(ClassOrInterfaceDeclaration classOrInterfaceDeclaration, Object arg) {
         //determine the start and end lines and check that it doesn't exceed 50.
         if (classOrInterfaceDeclaration.getEndLine() - classOrInterfaceDeclaration.getBeginLine() > 50) {
-            reportViolation(new KeepEntitiesSmallViolation(file,classOrInterfaceDeclaration));
+            reportViolation(new KeepEntitiesSmallViolation(classOrInterfaceDeclaration));
         }
 
         super.visit(classOrInterfaceDeclaration, arg);

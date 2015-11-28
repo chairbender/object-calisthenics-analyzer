@@ -17,23 +17,16 @@ public class TwoOrFewerFieldsViolation extends Violation {
             "Use the" +
             " 'has-a' idea of object oriented programming (i.e. Employee 'has-an' Address). Prefer containment (has-a) to inheritance (is-a), but don't rule inheritance out completely.",
             "Rule 8 - No classes with more than 2 instance variables/fields/members.");
-    private final ClassOrInterfaceDeclaration violatingDeclaration;
 
-    /**@param inFile file in which the violation occurred
+    /**
      * @param violatingDeclaration the declaration violating the rule
      */
-    public TwoOrFewerFieldsViolation(File inFile, ClassOrInterfaceDeclaration violatingDeclaration) {
-        super(inFile);
-        this.violatingDeclaration = violatingDeclaration;
+    public TwoOrFewerFieldsViolation(ClassOrInterfaceDeclaration violatingDeclaration) {
+        super(violatingDeclaration);
     }
 
     @Override
     public RuleInfo getRuleInfo() {
         return ruleInfo;
-    }
-
-    @Override
-    public String getViolationLocation() {
-        return MessageUtils.getFullyQualifiedViolationLocation(getFile(),violatingDeclaration);
     }
 }

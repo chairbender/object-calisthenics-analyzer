@@ -16,23 +16,16 @@ public class NoGettersSettersViolation extends Violation {
     private static final RuleInfo ruleInfo = new RuleInfo("Tell, don't ask. Instead of asking for data from the object," +
             " tell it to do whatever you were going to do with that data.",
             "Rule 9 - No getters/setters/properties.");
-    private final MethodDeclaration violatingDeclaration;
 
-    /**@param inFile file in which the violation occurred
+    /**
      * @param violatingDeclaration the declaration violating the rule
      */
-    public NoGettersSettersViolation(File inFile, MethodDeclaration violatingDeclaration) {
-        super(inFile);
-        this.violatingDeclaration = violatingDeclaration;
+    public NoGettersSettersViolation(MethodDeclaration violatingDeclaration) {
+        super(violatingDeclaration);
     }
 
     @Override
     public RuleInfo getRuleInfo() {
         return ruleInfo;
-    }
-
-    @Override
-    public String getViolationLocation() {
-        return MessageUtils.getFullyQualifiedViolationLocation(getFile(),violatingDeclaration);
     }
 }

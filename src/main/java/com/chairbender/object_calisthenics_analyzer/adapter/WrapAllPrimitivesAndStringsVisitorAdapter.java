@@ -23,10 +23,9 @@ import java.sql.Ref;
 public class WrapAllPrimitivesAndStringsVisitorAdapter extends CalisthenicsVisitorAdapter {
     /**
      * @param violationMonitor violation monitor that violations will be reported to
-     * @param file             file being visited
      */
-    public WrapAllPrimitivesAndStringsVisitorAdapter(ViolationMonitor violationMonitor, File file) {
-        super(violationMonitor, file);
+    public WrapAllPrimitivesAndStringsVisitorAdapter(ViolationMonitor violationMonitor) {
+        super(violationMonitor);
     }
 
     @Override
@@ -49,12 +48,12 @@ public class WrapAllPrimitivesAndStringsVisitorAdapter extends CalisthenicsVisit
                     //determine if it is a primitive. Consider string to be a primitive.
                     Type type = ((FieldDeclaration) childDeclaration).getType();
                     if (type instanceof PrimitiveType) {
-                        reportViolation(new WrapAllPrimitivesAndStringsViolation(getFile(), (FieldDeclaration) childDeclaration));
+                        reportViolation(new WrapAllPrimitivesAndStringsViolation((FieldDeclaration) childDeclaration));
                     } else if (type instanceof ReferenceType) {
                         if (((ReferenceType)type).getType() instanceof ClassOrInterfaceType) {
                             ClassOrInterfaceType classOrInterfaceType = (ClassOrInterfaceType) ((ReferenceType)type).getType();
                             if (classOrInterfaceType.getName().equals("String")) {
-                                reportViolation(new WrapAllPrimitivesAndStringsViolation(getFile(), (FieldDeclaration) childDeclaration));
+                                reportViolation(new WrapAllPrimitivesAndStringsViolation((FieldDeclaration) childDeclaration));
                             }
                         }
                     }

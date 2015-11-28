@@ -15,12 +15,11 @@ public abstract class MessageUtils {
 
     /**
      *
-     * @param fileName file the violation occurred in
      * @param node node to get the fully qualified class name for
-     * @return a string with the fully qualified class name of the class the node appears in and the file
+     * @return a string with the fully qualified class name of the class the node appears in and the java class
      *      name and line number of the violation in paranthesese (just like you see with a stack trace)
      */
-    public static String getFullyQualifiedViolationLocation(File fileName, Node node) {
+    public static String getFullyQualifiedViolationLocation(Node node) {
 
         //explore ancestors until we get to the class
         Node currentNode = node;
@@ -37,6 +36,6 @@ public abstract class MessageUtils {
         String fullyQualifiedClassName = currentPackageDeclaration.getName().toString() + "." + className;
 
 
-        return fullyQualifiedClassName + "(" + fileName.getName() + ":" + node.getBeginLine() + ")";
+        return fullyQualifiedClassName + ":" + node.getBeginLine();
     }
 }

@@ -1,6 +1,8 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
+import com.chairbender.object_calisthenics_analyzer.util.MessageUtils;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
+import com.github.javaparser.ast.Node;
 
 import java.io.File;
 
@@ -10,14 +12,14 @@ import java.io.File;
  * Created by chairbender on 11/21/2015.
  */
 public abstract class Violation{
-    private File inFile;
+    private Node violatingNode;
 
     /**
      *
-     * @param inFile file the violation occurred in
+     * @param violatingNode node where the violation occurred
      */
-    public Violation(File inFile) {
-        this.inFile = inFile;
+    public Violation(Node violatingNode) {
+        this.violatingNode = violatingNode;
     }
 
     /**
@@ -26,16 +28,14 @@ public abstract class Violation{
     public abstract RuleInfo getRuleInfo();
 
     /**
-     *
-     * @return the file in which the violation occurred
+     * @return the exact node where the violation occurred
      */
-    public File getFile() {
-        return inFile;
+    public Node getViolationLocation() {
+        return violatingNode;
     }
 
-    /**
-     * Prints the violation in a human readable format
-     */
-    public abstract String getViolationLocation();
-
+    @Override
+    public String toString() {
+        return MessageUtils.getFullyQualifiedViolationLocation(violatingNode);
+    }
 }

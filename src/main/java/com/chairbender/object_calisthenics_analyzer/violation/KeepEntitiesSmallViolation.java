@@ -17,14 +17,12 @@ public class KeepEntitiesSmallViolation extends Violation {
             " up into smaller classes. As you create" +
             " more classes, keep the packages organized as well. Ensure the classes in each package are cohesive and have a shared purpose. Try not to exceed 10 classes" +
             " per package.","Rule 7 - Keep all entities small (keep classes under 50 lines)");
-    private final ClassOrInterfaceDeclaration violatingDeclaration;
 
-    /**@param inFile file in which the violation occurred
+    /**
      * @param violatingDeclaration the declaration violating the rule
      */
-    public KeepEntitiesSmallViolation(File inFile, ClassOrInterfaceDeclaration violatingDeclaration) {
-        super(inFile);
-        this.violatingDeclaration = violatingDeclaration;
+    public KeepEntitiesSmallViolation(ClassOrInterfaceDeclaration violatingDeclaration) {
+        super(violatingDeclaration);
     }
 
     @Override
@@ -32,8 +30,4 @@ public class KeepEntitiesSmallViolation extends Violation {
         return ruleInfo;
     }
 
-    @Override
-    public String getViolationLocation() {
-        return MessageUtils.getFullyQualifiedViolationLocation(getFile(),violatingDeclaration);
-    }
 }

@@ -20,10 +20,9 @@ public class OneDotPerLineVisitorAdapter extends CalisthenicsVisitorAdapter{
     /**
      *
      * @param violationMonitor violation monitor to report violations to
-     * @param file file being examined
      */
-    public OneDotPerLineVisitorAdapter(ViolationMonitor violationMonitor, File file) {
-        super(violationMonitor,file);
+    public OneDotPerLineVisitorAdapter(ViolationMonitor violationMonitor) {
+        super(violationMonitor);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class OneDotPerLineVisitorAdapter extends CalisthenicsVisitorAdapter{
     private void reportDotCountViolation(Object toCheck,Statement statement) {
         if (toCheck != null) {
         if (dotCount(toCheck.toString()) > 1) {
-            reportViolation(new OneDotPerLineViolation(file, statement));
+            reportViolation(new OneDotPerLineViolation(statement));
 
         }   }
     }

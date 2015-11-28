@@ -29,10 +29,9 @@ public class NoGettersSettersVisitorAdapter extends CalisthenicsVisitorAdapter{
     /**
      *
      * @param violationMonitor violation monitor to report violations to
-     * @param file file being examined
      */
-    public NoGettersSettersVisitorAdapter(ViolationMonitor violationMonitor, File file) {
-        super(violationMonitor, file);
+    public NoGettersSettersVisitorAdapter(ViolationMonitor violationMonitor) {
+        super(violationMonitor);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class NoGettersSettersVisitorAdapter extends CalisthenicsVisitorAdapter{
                         //check that it only returns a member variable
                         if (returnExpression instanceof NameExpr ||
                                 returnExpression instanceof FieldAccessExpr) {
-                            reportViolation(new NoGettersSettersViolation(file,methodDeclaration));
+                            reportViolation(new NoGettersSettersViolation(methodDeclaration));
                         }
                     }
                 }
@@ -106,7 +105,7 @@ public class NoGettersSettersVisitorAdapter extends CalisthenicsVisitorAdapter{
                                 expression instanceof FieldAccessExpr ||
                         expression instanceof AssignExpr) &&
                                 expression.toStringWithoutComments().contains(paramName)) {
-                            reportViolation(new NoGettersSettersViolation(file,methodDeclaration));
+                            reportViolation(new NoGettersSettersViolation(methodDeclaration));
                         }
                     }
                 }
@@ -142,7 +141,7 @@ public class NoGettersSettersVisitorAdapter extends CalisthenicsVisitorAdapter{
                 statement instanceof ForStmt ||
                 statement instanceof DoStmt ||
                 statement instanceof ForeachStmt) {
-            reportViolation(new SingleLevelOfIndentationViolation(getFile(),statement));
+            reportViolation(new SingleLevelOfIndentationViolation(statement));
         }
     }
 

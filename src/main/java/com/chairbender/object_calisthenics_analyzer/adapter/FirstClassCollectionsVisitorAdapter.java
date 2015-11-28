@@ -24,10 +24,9 @@ import java.io.File;
 public class FirstClassCollectionsVisitorAdapter extends CalisthenicsVisitorAdapter {
     /**
      * @param violationMonitor violation monitor that violations will be reported to
-     * @param file             file being visited
      */
-    public FirstClassCollectionsVisitorAdapter(ViolationMonitor violationMonitor, File file) {
-        super(violationMonitor, file);
+    public FirstClassCollectionsVisitorAdapter(ViolationMonitor violationMonitor) {
+        super(violationMonitor);
     }
 
     @Override
@@ -55,7 +54,7 @@ public class FirstClassCollectionsVisitorAdapter extends CalisthenicsVisitorAdap
                             //determine if the type is a collection or any collection subinterface or any
                             //class that implements any collection subinterface
                             if (ClassUtils.isCollection(classOrInterfaceType.getName())) {
-                                reportViolation(new FirstClassCollectionsViolation(getFile(), (FieldDeclaration) childDeclaration));
+                                reportViolation(new FirstClassCollectionsViolation((FieldDeclaration) childDeclaration));
                             }
                         }
                     }

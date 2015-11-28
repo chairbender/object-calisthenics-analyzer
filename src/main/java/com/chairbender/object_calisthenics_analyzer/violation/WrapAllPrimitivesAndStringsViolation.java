@@ -15,14 +15,12 @@ import java.io.File;
 public class WrapAllPrimitivesAndStringsViolation extends Violation {
     private static final RuleInfo ruleInfo = new RuleInfo("Create a class with a descriptive name to wrap this usage of the primitive or String class.",
             "Rule 3 - Wrap all primitives and Strings.");
-    private final FieldDeclaration violatingDeclaration;
 
-    /**@param inFile file in which the violation occurred
+    /**
      * @param violatingDeclaration the declaration violating the rule
      */
-    public WrapAllPrimitivesAndStringsViolation(File inFile, FieldDeclaration violatingDeclaration) {
-        super(inFile);
-        this.violatingDeclaration = violatingDeclaration;
+    public WrapAllPrimitivesAndStringsViolation(FieldDeclaration violatingDeclaration) {
+        super(violatingDeclaration);
     }
 
     @Override
@@ -30,8 +28,4 @@ public class WrapAllPrimitivesAndStringsViolation extends Violation {
         return ruleInfo;
     }
 
-    @Override
-    public String getViolationLocation() {
-        return MessageUtils.getFullyQualifiedViolationLocation(getFile(),violatingDeclaration);
-    }
 }

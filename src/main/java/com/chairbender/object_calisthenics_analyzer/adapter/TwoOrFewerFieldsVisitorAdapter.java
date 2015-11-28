@@ -22,10 +22,9 @@ import java.io.File;
 public class TwoOrFewerFieldsVisitorAdapter extends CalisthenicsVisitorAdapter {
     /**
      * @param violationMonitor violation monitor that violations will be reported to
-     * @param file             file being visited
      */
-    public TwoOrFewerFieldsVisitorAdapter(ViolationMonitor violationMonitor, File file) {
-        super(violationMonitor, file);
+    public TwoOrFewerFieldsVisitorAdapter(ViolationMonitor violationMonitor) {
+        super(violationMonitor);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class TwoOrFewerFieldsVisitorAdapter extends CalisthenicsVisitorAdapter {
             }
         }
         if (numFields > 2) {
-            reportViolation(new TwoOrFewerFieldsViolation(file,classOrInterfaceDeclaration));
+            reportViolation(new TwoOrFewerFieldsViolation(classOrInterfaceDeclaration));
         }
         super.visit(classOrInterfaceDeclaration,arg);
 

@@ -24,10 +24,9 @@ public class SingleLevelOfIndentationVisitorAdapter extends CalisthenicsVisitorA
     /**
      *
      * @param violationMonitor violation monitor to report violations to
-     * @param file file being examined
      */
-    public SingleLevelOfIndentationVisitorAdapter(ViolationMonitor violationMonitor, File file) {
-        super(violationMonitor,file);
+    public SingleLevelOfIndentationVisitorAdapter(ViolationMonitor violationMonitor) {
+        super(violationMonitor);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class SingleLevelOfIndentationVisitorAdapter extends CalisthenicsVisitorA
                 statement instanceof ForStmt ||
                 statement instanceof DoStmt ||
                 statement instanceof ForeachStmt) {
-            reportViolation(new SingleLevelOfIndentationViolation(getFile(),statement));
+            reportViolation(new SingleLevelOfIndentationViolation(statement));
         }
     }
 
