@@ -2,6 +2,12 @@
 
 A tool for analyzing Java code for its adherence to [Object Calisthenics](http://www.cs.helsinki.fi/u/luontola/tdd-2009/ext/ObjectCalisthenics.pdf).
 
+## Usage
+''''
+ViolationMonitor violationMonitor = ObjectCalisthenicsAnalyzer.analyze(new File("fileOrProjectFolderToAnalyze"),"UTF-8");
+List<Violation> violations = violations.getAllViolations();
+''''
+
 ## Stuff It Won't Find For You
 For various reasons, there's a few things mentioned in Object Calisthenics that this program doesn't check for.
 
