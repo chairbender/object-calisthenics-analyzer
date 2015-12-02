@@ -1,5 +1,6 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
+import com.chairbender.object_calisthenics_analyzer.util.ClassUtils;
 import com.chairbender.object_calisthenics_analyzer.util.MessageUtils;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.Node;
@@ -37,5 +38,9 @@ public abstract class Violation{
     @Override
     public String toString() {
         return MessageUtils.getFullyQualifiedViolationLocation(violatingNode);
+    }
+
+    public String getFullyQualifiedViolationClass() {
+        return ClassUtils.getFullyQualifiedClassName(violatingNode);
     }
 }

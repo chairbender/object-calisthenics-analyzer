@@ -1,5 +1,9 @@
 package com.chairbender.object_calisthenics_analyzer.util;
 
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.PackageDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import org.reflections.Reflections;
 
 import java.util.Collection;
@@ -41,5 +45,31 @@ public abstract class ClassUtils {
             loadCollectionClassNames();
         }
         return collectionClassNames.contains(name);
+    }
+
+    /**
+     *
+     * @param forNode node whose class should be determined
+     * @return the fully qualified class name for the class that forNode
+     *      appears in.
+     */
+    public static String getFullyQualifiedClassName(Node forNode) {
+        //explore ancestors until we get to the class
+        Node currentNode = forNode;
+        while (!(currentNode instanceof ClassOrInterfaceDeclaration)) {
+            currentNode = currentNode.getParentNode();
+        }
+        String className = ((ClassOrInterfaceDeclaration)currentNode).getName();
+
+        while (!(currentNode instanceof CompilationUnit)) {
+            currentNode = currentNode.getParentNode();
+        }
+
+        PackageDeclaration currentPackageDeclaration = ((CompilationUnit)currentNode).getPackage();
+        String fullyQualifiedClassName = currentPackageDeclaration.getName().toString() + "." + className;
+
+
+        return fullyQualifiedClassName;
+
     }
 }

@@ -20,22 +20,6 @@ public abstract class MessageUtils {
      *      name and line number of the violation in paranthesese (just like you see with a stack trace)
      */
     public static String getFullyQualifiedViolationLocation(Node node) {
-
-        //explore ancestors until we get to the class
-        Node currentNode = node;
-        while (!(currentNode instanceof ClassOrInterfaceDeclaration)) {
-            currentNode = currentNode.getParentNode();
-        }
-        String className = ((ClassOrInterfaceDeclaration)currentNode).getName();
-
-        while (!(currentNode instanceof CompilationUnit)) {
-            currentNode = currentNode.getParentNode();
-        }
-
-        PackageDeclaration currentPackageDeclaration = ((CompilationUnit)currentNode).getPackage();
-        String fullyQualifiedClassName = currentPackageDeclaration.getName().toString() + "." + className;
-
-
-        return fullyQualifiedClassName + ":" + node.getBeginLine();
+        return ClassUtils.getFullyQualifiedClassName(node)+ ":" + node.getBeginLine();
     }
 }
