@@ -2,6 +2,8 @@
 
 A tool for analyzing Java code for its adherence to [Object Calisthenics](http://www.cs.helsinki.fi/u/luontola/tdd-2009/ext/ObjectCalisthenics.pdf).
 
+Do you want to get better at Object Oriented programming? If you want to get better at something, you should practice. By attempting to write code that conforms to the 9 rules laid out by Object Calisthenics, you can force yourself to overcome your usual development habits and challenge yourself to make use of the full spectrum of OOP tools, thereby improving your familiarity with the designs afforded by OOP. This API provides a way to programatically analyze your Java code for adherence to those rules.
+
 [JavaDoc Documentation](http://chairbender.github.io/object-calisthenics-analyzer/)
 
 ## Usage
