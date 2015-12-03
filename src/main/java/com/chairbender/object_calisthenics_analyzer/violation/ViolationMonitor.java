@@ -1,5 +1,7 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
+import com.chairbender.object_calisthenics_analyzer.violation.model.ViolationCategory;
+
 import java.io.PrintStream;
 import java.util.*;
 
@@ -11,7 +13,7 @@ import java.util.*;
  * Created by chairbender on 11/21/2015.
  */
 public class ViolationMonitor {
-    private List<Violation> violationList = new LinkedList<>();
+    private Map<ViolationCategory,List<Violation>> violations = new HashMap<>();
 
     /**
      * Logs a violation of the object calisthenics rules
@@ -19,7 +21,12 @@ public class ViolationMonitor {
      * @param toReport violation to report
      */
     public void reportViolation(Violation toReport) {
-        violationList.add(toReport);
+        ViolationCategory category = ViolationCategory.forViolation(toReport);
+        if (!violations.containsKey(category)) {
+            violations.put(category, new LinkedList<Violation>());
+        }
+        violations.get(category).add(toReport);
+
     }
 
     /**
@@ -28,17 +35,20 @@ public class ViolationMonitor {
      * @param out printstream to pretty print a list of violations
      */
     public void printViolations(PrintStream out) {
-        for (Violation violation : violationList) {
-            out.println(violation.getRuleInfo().describe() + "\n\t" + violation.toString());
+        for (ViolationCategory violationCategory : violations.keySet()) {
+            out.println(violationCategory.getRuleInfo().describe() + "\n");
+            for (Violation violation : violations.get(violationCategory)) {
+                out.println("\t" + violation.toString() + "\n");
+            }
         }
     }
 
     /**
      *
-     * @return the list of violations in the order they were reported. Do not
-     * modify this list.
+     * @return all of the violations of each category in the order they were reported. Do not
+     * modify this map.
      */
-    public List<Violation> getAllViolations() {
-        return Collections.unmodifiableList(violationList);
+    public Map<ViolationCategory,List<Violation>> getAllViolations() {
+        return violations;
     }
 }

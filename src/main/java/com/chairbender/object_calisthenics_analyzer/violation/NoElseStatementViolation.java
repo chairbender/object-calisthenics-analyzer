@@ -1,10 +1,7 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
-import com.chairbender.object_calisthenics_analyzer.util.MessageUtils;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.stmt.Statement;
-
-import java.io.File;
 
 /**
  * Represents a violation of using an else statement.
@@ -12,7 +9,7 @@ import java.io.File;
  * Created by chairbender on 11/21/2015.
  */
 public class NoElseStatementViolation extends Violation {
-    private static final RuleInfo ruleInfo = new RuleInfo("Use polymorphism to handle variations in logic based on variations in state. Use the Null Object Pattern" +
+    public static final RuleInfo RULE_INFO = new RuleInfo("Use polymorphism to handle variations in logic based on variations in state. Use the Null Object Pattern" +
             " to handle checking for nulls and behaving differently if that is the case.",
             "Rule 2 - Don't use the ELSE keyword. Yes, even ELSE IF");
 
@@ -25,6 +22,6 @@ public class NoElseStatementViolation extends Violation {
 
     @Override
     public RuleInfo getRuleInfo() {
-        return ruleInfo;
+        return RULE_INFO;
     }
 }
