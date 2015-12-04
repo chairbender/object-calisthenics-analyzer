@@ -25,7 +25,7 @@ public abstract class ClassUtils {
      * populates the collection class names
      */
     private static void loadCollectionClassNames() {
-        collectionClassNames = new HashSet<>();
+        collectionClassNames = new HashSet<String>();
 
         Reflections reflections = new Reflections("java.util");
 

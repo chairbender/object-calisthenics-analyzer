@@ -13,7 +13,7 @@ import java.util.*;
  * Created by chairbender on 11/21/2015.
  */
 public class ViolationMonitor {
-    private Map<ViolationCategory,List<Violation>> violations = new HashMap<>();
+    private Map<ViolationCategory,List<Violation>> violations = new HashMap<ViolationCategory,List<Violation>>();
 
     /**
      * Logs a violation of the object calisthenics rules

@@ -57,7 +57,7 @@ public class ObjectCalisthenicsAnalyzer {
                     DirectoryFileFilter.DIRECTORY
             );
         } else {
-            files = new HashSet<>();
+            files = new HashSet<File>();
             files.add(file);
         }
         ViolationMonitor violationMonitor = new ViolationMonitor();
