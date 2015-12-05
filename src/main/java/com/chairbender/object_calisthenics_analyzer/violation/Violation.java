@@ -40,6 +40,10 @@ public abstract class Violation{
         return MessageUtils.getFullyQualifiedViolationLocation(violatingNode);
     }
 
+    /**
+     *
+     * @return the fully qualified class name where the violation occurred, null if not found
+     */
     public String getFullyQualifiedViolationClass() {
         return ClassUtils.getFullyQualifiedClassName(violatingNode);
     }

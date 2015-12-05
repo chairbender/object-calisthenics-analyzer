@@ -51,13 +51,16 @@ public abstract class ClassUtils {
      *
      * @param forNode node whose class should be determined
      * @return the fully qualified class name for the class that forNode
-     *      appears in.
+     *      appears in, null if not found
      */
     public static String getFullyQualifiedClassName(Node forNode) {
         //explore ancestors until we get to the class
         Node currentNode = forNode;
-        while (!(currentNode instanceof ClassOrInterfaceDeclaration)) {
+        while (currentNode != null && !(currentNode instanceof ClassOrInterfaceDeclaration) ) {
             currentNode = currentNode.getParentNode();
+        }
+        if (currentNode == null) {
+            return null;
         }
         String className = ((ClassOrInterfaceDeclaration)currentNode).getName();
 
