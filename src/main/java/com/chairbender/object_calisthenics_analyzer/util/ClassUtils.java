@@ -69,10 +69,12 @@ public abstract class ClassUtils {
         }
 
         PackageDeclaration currentPackageDeclaration = ((CompilationUnit)currentNode).getPackage();
-        String fullyQualifiedClassName = currentPackageDeclaration.getName().toString() + "." + className;
-
-
-        return fullyQualifiedClassName;
+        if (currentPackageDeclaration == null || currentPackageDeclaration.getName() == null) {
+            return null;
+        } else {
+            String fullyQualifiedClassName = currentPackageDeclaration.getName().toString() + "." + className;
+            return fullyQualifiedClassName;
+        }
 
     }
 }

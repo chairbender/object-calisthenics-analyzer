@@ -19,6 +19,11 @@ dependencies {
     compile 'org.reflections:reflections:0.9.10'
 }
 
+task copyToLib(type: Copy) {
+    into "$buildDir/output/lib"
+    from configurations.runtime
+}
+
 jar {
     manifest {
         attributes 'Main-Class': 'com.chairbender.object_calisthenics_analyzer.ObjectCalisthenicsAnalyzer'

@@ -17,9 +17,15 @@ public abstract class MessageUtils {
      *
      * @param node node to get the fully qualified class name for
      * @return a string with the fully qualified class name of the class the node appears in and the java class
-     *      name and line number of the violation in paranthesese (just like you see with a stack trace)
+     *      name and line number of the violation in paranthesese (just like you see with a stack trace). Null if
+     *      the fully qualified class name cannot be found
      */
     public static String getFullyQualifiedViolationLocation(Node node) {
-        return ClassUtils.getFullyQualifiedClassName(node)+ ":" + node.getBeginLine();
+        String className = ClassUtils.getFullyQualifiedClassName(node);
+        if (className != null) {
+            return className + ":" + node.getBeginLine();
+        } else {
+            return null;
+        }
     }
 }

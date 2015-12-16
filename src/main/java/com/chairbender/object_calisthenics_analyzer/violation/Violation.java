@@ -35,6 +35,11 @@ public abstract class Violation{
         return violatingNode;
     }
 
+    /**
+     *
+     * @return a string with the fully qualified class name and line number of the violation. Under some circumstances, this
+     * class name cannot be determined, in which case this will return null
+     */
     @Override
     public String toString() {
         return MessageUtils.getFullyQualifiedViolationLocation(violatingNode);
