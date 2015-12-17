@@ -21,11 +21,14 @@ import java.sql.Ref;
  * Created by chairbender on 11/22/2015.
  */
 public class WrapAllPrimitivesAndStringsVisitorAdapter extends CalisthenicsVisitorAdapter {
+
+
     /**
      * @param violationMonitor violation monitor that violations will be reported to
+     * @param sourceFile
      */
-    public WrapAllPrimitivesAndStringsVisitorAdapter(ViolationMonitor violationMonitor) {
-        super(violationMonitor);
+    public WrapAllPrimitivesAndStringsVisitorAdapter(ViolationMonitor violationMonitor, File sourceFile) {
+        super(violationMonitor, sourceFile);
     }
 
     @Override
@@ -48,12 +51,12 @@ public class WrapAllPrimitivesAndStringsVisitorAdapter extends CalisthenicsVisit
                     //determine if it is a primitive. Consider string to be a primitive.
                     Type type = ((FieldDeclaration) childDeclaration).getType();
                     if (type instanceof PrimitiveType) {
-                        reportViolation(new WrapAllPrimitivesAndStringsViolation((FieldDeclaration) childDeclaration));
+                        reportViolation(new WrapAllPrimitivesAndStringsViolation((FieldDeclaration) childDeclaration,sourceFile));
                     } else if (type instanceof ReferenceType) {
                         if (((ReferenceType)type).getType() instanceof ClassOrInterfaceType) {
                             ClassOrInterfaceType classOrInterfaceType = (ClassOrInterfaceType) ((ReferenceType)type).getType();
                             if (classOrInterfaceType.getName().equals("String")) {
-                                reportViolation(new WrapAllPrimitivesAndStringsViolation((FieldDeclaration) childDeclaration));
+                                reportViolation(new WrapAllPrimitivesAndStringsViolation((FieldDeclaration) childDeclaration,sourceFile));
                             }
                         }
                     }

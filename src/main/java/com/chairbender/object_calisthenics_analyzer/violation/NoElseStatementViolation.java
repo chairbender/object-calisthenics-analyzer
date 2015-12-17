@@ -3,6 +3,8 @@ package com.chairbender.object_calisthenics_analyzer.violation;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.stmt.Statement;
 
+import java.io.File;
+
 /**
  * Represents a violation of using an else statement.
  *
@@ -15,9 +17,10 @@ public class NoElseStatementViolation extends Violation {
 
     /**
      * @param violatingStatement the statement violating the rule
+     * @param sourceFile file where the violation occurred
      */
-    public NoElseStatementViolation(Statement violatingStatement) {
-        super(violatingStatement);
+    public NoElseStatementViolation(Statement violatingStatement,File sourceFile) {
+        super(violatingStatement,sourceFile);
     }
 
     @Override

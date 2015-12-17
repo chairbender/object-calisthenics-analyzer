@@ -3,6 +3,8 @@ package com.chairbender.object_calisthenics_analyzer.violation;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.stmt.Statement;
 
+import java.io.File;
+
 /**
  * Represents a violation of using more than one "dot" in a line
  *
@@ -18,9 +20,10 @@ public class OneDotPerLineViolation extends Violation {
 
     /**
      * @param violatingStatement the statement violating the rule
+     *@param sourceFile file where the violation occurred
      */
-    public OneDotPerLineViolation(Statement violatingStatement) {
-        super(violatingStatement);
+    public OneDotPerLineViolation(Statement violatingStatement,File sourceFile) {
+        super(violatingStatement,sourceFile);
     }
 
     @Override

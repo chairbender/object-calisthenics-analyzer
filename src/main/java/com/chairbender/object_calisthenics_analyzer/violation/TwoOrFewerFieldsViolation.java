@@ -3,6 +3,8 @@ package com.chairbender.object_calisthenics_analyzer.violation;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
+import java.io.File;
+
 /**
  * Represents a violation of having more than two fields in a class
  *
@@ -17,9 +19,10 @@ public class TwoOrFewerFieldsViolation extends Violation {
 
     /**
      * @param violatingDeclaration the declaration violating the rule
+     * @param sourceFile file where the violation occurred
      */
-    public TwoOrFewerFieldsViolation(ClassOrInterfaceDeclaration violatingDeclaration) {
-        super(violatingDeclaration);
+    public TwoOrFewerFieldsViolation(ClassOrInterfaceDeclaration violatingDeclaration,File sourceFile) {
+        super(violatingDeclaration,sourceFile);
     }
 
     @Override

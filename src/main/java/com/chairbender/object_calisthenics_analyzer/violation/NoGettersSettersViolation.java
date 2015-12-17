@@ -3,6 +3,8 @@ package com.chairbender.object_calisthenics_analyzer.violation;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.body.MethodDeclaration;
 
+import java.io.File;
+
 /**
  * Represents a violation of having an obvious getter or setter
  *
@@ -15,9 +17,10 @@ public class NoGettersSettersViolation extends Violation {
 
     /**
      * @param violatingDeclaration the declaration violating the rule
+     * @param sourceFile file where the violation occurred
      */
-    public NoGettersSettersViolation(MethodDeclaration violatingDeclaration) {
-        super(violatingDeclaration);
+    public NoGettersSettersViolation(MethodDeclaration violatingDeclaration,File sourceFile) {
+        super(violatingDeclaration,sourceFile);
     }
 
     @Override

@@ -20,9 +20,10 @@ public class NoElseKeywordVisitorAdapter extends CalisthenicsVisitorAdapter{
     /**
      *
      * @param violationMonitor violation monitor to report violations to
+     * @param sourceFile
      */
-    public NoElseKeywordVisitorAdapter(ViolationMonitor violationMonitor) {
-        super(violationMonitor);
+    public NoElseKeywordVisitorAdapter(ViolationMonitor violationMonitor,File sourceFile) {
+        super(violationMonitor,sourceFile);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class NoElseKeywordVisitorAdapter extends CalisthenicsVisitorAdapter{
             Statement currentIf = toCheck;
             while (currentIf != null && currentIf instanceof IfStmt) {
                 if (((IfStmt)currentIf).getElseStmt() != null) {
-                    reportViolation(new NoElseStatementViolation(((IfStmt)currentIf).getElseStmt()));
+                    reportViolation(new NoElseStatementViolation(((IfStmt)currentIf).getElseStmt(),sourceFile));
                 }
                 currentIf = ((IfStmt) currentIf).getElseStmt();
             }

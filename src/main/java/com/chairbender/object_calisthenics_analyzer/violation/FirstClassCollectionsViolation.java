@@ -3,6 +3,8 @@ package com.chairbender.object_calisthenics_analyzer.violation;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.body.FieldDeclaration;
 
+import java.io.File;
+
 /**
  * Represents a violation of having a class that has a collections member and some other members
  *
@@ -14,9 +16,10 @@ public class FirstClassCollectionsViolation extends Violation {
 
     /**
      * @param violatingDeclaration the declaration violating the rule
+     * @param sourceFile file where the violation occurred
      */
-    public FirstClassCollectionsViolation(FieldDeclaration violatingDeclaration) {
-        super(violatingDeclaration);
+    public FirstClassCollectionsViolation(FieldDeclaration violatingDeclaration,File sourceFile) {
+        super(violatingDeclaration,sourceFile);
     }
 
     @Override

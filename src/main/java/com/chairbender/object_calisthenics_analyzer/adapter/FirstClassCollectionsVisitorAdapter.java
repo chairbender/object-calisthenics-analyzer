@@ -25,8 +25,8 @@ public class FirstClassCollectionsVisitorAdapter extends CalisthenicsVisitorAdap
     /**
      * @param violationMonitor violation monitor that violations will be reported to
      */
-    public FirstClassCollectionsVisitorAdapter(ViolationMonitor violationMonitor) {
-        super(violationMonitor);
+    public FirstClassCollectionsVisitorAdapter(ViolationMonitor violationMonitor,File sourceFile) {
+        super(violationMonitor,sourceFile);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class FirstClassCollectionsVisitorAdapter extends CalisthenicsVisitorAdap
                             //determine if the type is a collection or any collection subinterface or any
                             //class that implements any collection subinterface
                             if (ClassUtils.isCollection(classOrInterfaceType.getName())) {
-                                reportViolation(new FirstClassCollectionsViolation((FieldDeclaration) childDeclaration));
+                                reportViolation(new FirstClassCollectionsViolation((FieldDeclaration) childDeclaration,sourceFile));
                             }
                         }
                     }

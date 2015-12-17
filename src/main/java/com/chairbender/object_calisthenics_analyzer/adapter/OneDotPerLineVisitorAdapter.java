@@ -17,12 +17,13 @@ import java.io.File;
  */
 public class OneDotPerLineVisitorAdapter extends CalisthenicsVisitorAdapter{
 
+
     /**
-     *
-     * @param violationMonitor violation monitor to report violations to
+     * @param violationMonitor violation monitor that violations will be reported to
+     * @param sourceFile
      */
-    public OneDotPerLineVisitorAdapter(ViolationMonitor violationMonitor) {
-        super(violationMonitor);
+    public OneDotPerLineVisitorAdapter(ViolationMonitor violationMonitor, File sourceFile) {
+        super(violationMonitor, sourceFile);
     }
 
     @Override
@@ -94,7 +95,7 @@ public class OneDotPerLineVisitorAdapter extends CalisthenicsVisitorAdapter{
     private void reportDotCountViolation(Object toCheck,Statement statement) {
         if (toCheck != null) {
         if (dotCount(toCheck.toString()) > 1) {
-            reportViolation(new OneDotPerLineViolation(statement));
+            reportViolation(new OneDotPerLineViolation(statement,sourceFile));
 
         }   }
     }

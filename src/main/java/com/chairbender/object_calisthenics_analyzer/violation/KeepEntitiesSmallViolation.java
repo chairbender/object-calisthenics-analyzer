@@ -3,6 +3,8 @@ package com.chairbender.object_calisthenics_analyzer.violation;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 
+import java.io.File;
+
 /**
  * Represents a violation of having more than 50 lines in a class
  *
@@ -16,9 +18,10 @@ public class KeepEntitiesSmallViolation extends Violation {
 
     /**
      * @param violatingDeclaration the declaration violating the rule
+     * @param sourceFile file where the violation occurred
      */
-    public KeepEntitiesSmallViolation(ClassOrInterfaceDeclaration violatingDeclaration) {
-        super(violatingDeclaration);
+    public KeepEntitiesSmallViolation(ClassOrInterfaceDeclaration violatingDeclaration,File sourceFile) {
+        super(violatingDeclaration, sourceFile);
     }
 
     @Override

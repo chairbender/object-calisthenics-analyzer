@@ -21,12 +21,13 @@ import java.util.List;
  */
 public class SingleLevelOfIndentationVisitorAdapter extends CalisthenicsVisitorAdapter{
 
+
     /**
-     *
-     * @param violationMonitor violation monitor to report violations to
+     * @param violationMonitor violation monitor that violations will be reported to
+     * @param sourceFile
      */
-    public SingleLevelOfIndentationVisitorAdapter(ViolationMonitor violationMonitor) {
-        super(violationMonitor);
+    public SingleLevelOfIndentationVisitorAdapter(ViolationMonitor violationMonitor, File sourceFile) {
+        super(violationMonitor, sourceFile);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class SingleLevelOfIndentationVisitorAdapter extends CalisthenicsVisitorA
                 statement instanceof ForStmt ||
                 statement instanceof DoStmt ||
                 statement instanceof ForeachStmt) {
-            reportViolation(new SingleLevelOfIndentationViolation(statement));
+            reportViolation(new SingleLevelOfIndentationViolation(statement,sourceFile));
         }
     }
 

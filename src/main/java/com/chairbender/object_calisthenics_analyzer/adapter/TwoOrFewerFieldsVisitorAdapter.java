@@ -20,11 +20,14 @@ import java.io.File;
  * Created by chairbender on 11/22/2015.
  */
 public class TwoOrFewerFieldsVisitorAdapter extends CalisthenicsVisitorAdapter {
+
+
     /**
      * @param violationMonitor violation monitor that violations will be reported to
+     * @param sourceFile
      */
-    public TwoOrFewerFieldsVisitorAdapter(ViolationMonitor violationMonitor) {
-        super(violationMonitor);
+    public TwoOrFewerFieldsVisitorAdapter(ViolationMonitor violationMonitor, File sourceFile) {
+        super(violationMonitor, sourceFile);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class TwoOrFewerFieldsVisitorAdapter extends CalisthenicsVisitorAdapter {
             }
         }
         if (numFields > 2) {
-            reportViolation(new TwoOrFewerFieldsViolation(classOrInterfaceDeclaration));
+            reportViolation(new TwoOrFewerFieldsViolation(classOrInterfaceDeclaration,sourceFile));
         }
         super.visit(classOrInterfaceDeclaration,arg);
 

@@ -1,7 +1,6 @@
 package com.chairbender.object_calisthenics_analyzer.violation;
 
 import com.chairbender.object_calisthenics_analyzer.util.ClassUtils;
-import com.chairbender.object_calisthenics_analyzer.util.MessageUtils;
 import com.chairbender.object_calisthenics_analyzer.violation.model.RuleInfo;
 import com.github.javaparser.ast.Node;
 
@@ -14,13 +13,16 @@ import java.io.File;
  */
 public abstract class Violation{
     private Node violatingNode;
+    private File sourceFile;
 
     /**
      *
      * @param violatingNode node where the violation occurred
+     * @param sourceFile file where the violation occurred
      */
-    public Violation(Node violatingNode) {
+    public Violation(Node violatingNode,File sourceFile) {
         this.violatingNode = violatingNode;
+        this.sourceFile = sourceFile;
     }
 
     /**
@@ -38,11 +40,16 @@ public abstract class Violation{
     /**
      *
      * @return a string with the fully qualified class name and line number of the violation. Under some circumstances, this
-     * class name cannot be determined, in which case this will return null
+     * class name cannot be determined, in which case this will just return the file name and line number.
      */
     @Override
     public String toString() {
-        return MessageUtils.getFullyQualifiedViolationLocation(violatingNode);
+        String fullyQualifiedName = ClassUtils.getFullyQualifiedClassName(violatingNode);
+        if (fullyQualifiedName != null) {
+            return fullyQualifiedName + "(" + sourceFile.getName() + ":" + violatingNode.getBeginLine() +")";
+        } else {
+            return sourceFile.getName() + ":" + violatingNode.getBeginLine();
+        }
     }
 
     /**
@@ -51,5 +58,13 @@ public abstract class Violation{
      */
     public String getFullyQualifiedViolationClass() {
         return ClassUtils.getFullyQualifiedClassName(violatingNode);
+    }
+
+    /**
+     *
+     * @return the file where the violation occurred
+     */
+    public File getSourceFile() {
+        return sourceFile;
     }
 }

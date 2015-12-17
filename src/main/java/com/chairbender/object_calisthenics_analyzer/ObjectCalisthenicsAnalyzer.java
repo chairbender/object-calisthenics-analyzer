@@ -35,7 +35,7 @@ public class ObjectCalisthenicsAnalyzer {
      *
      */
     public static void main(String[] args) throws IOException, ParseException {
-        ViolationMonitor violations = analyze(new File(args[0]),"UTF-8");
+        ViolationMonitor violations = analyze(new File(args[0]), "UTF-8");
         //list the violations
         violations.printViolations(System.out);
     }
@@ -63,35 +63,10 @@ public class ObjectCalisthenicsAnalyzer {
         ViolationMonitor violationMonitor = new ViolationMonitor();
         for (File toProcess : files) {
             CompilationUnit compilationUnit = JavaParser.parse(toProcess,encoding,false);
-            visitAll(compilationUnit,violationMonitor);
+            visitAll(compilationUnit,violationMonitor,toProcess);
         }
 
         return violationMonitor;
-    }
-
-    /**
-     * @param inputStream input stream representing a Java source file to analyze.
-     * @param encoding encoding to use when reading the file.
-     * @throws IOException if error occurs reading the file
-     * @throws ParseException if error occurs parsing the source code
-     * @return the analysis of the provided java file
-     */
-    public static ViolationMonitor analyze(InputStream inputStream, String encoding) throws IOException, ParseException {
-        CompilationUnit compilationUnit = JavaParser.parse(inputStream,encoding,false);
-
-        return visitAll(compilationUnit,new ViolationMonitor());
-    }
-
-    /**
-     * @param reader reader representing a Java source file to analyze.
-     * @throws IOException if error occurs reading the file
-     * @throws ParseException if error occurs parsing the source code
-     * @return the analysis of the provided java file
-     */
-    public static ViolationMonitor analyze(Reader reader) throws IOException, ParseException {
-        CompilationUnit compilationUnit = JavaParser.parse(reader,false);
-
-        return visitAll(compilationUnit,new ViolationMonitor());
     }
 
     /**
@@ -102,15 +77,15 @@ public class ObjectCalisthenicsAnalyzer {
      * @return the violation monitor, now with any reports added to it.
      *
      */
-    private static ViolationMonitor visitAll(CompilationUnit compilationUnit,ViolationMonitor toAdd) {
-        new SingleLevelOfIndentationVisitorAdapter(toAdd).visit(compilationUnit,null);
-        new NoElseKeywordVisitorAdapter(toAdd).visit(compilationUnit,null);
-        new WrapAllPrimitivesAndStringsVisitorAdapter(toAdd).visit(compilationUnit,null);
-        new FirstClassCollectionsVisitorAdapter(toAdd).visit(compilationUnit,null);
-        new OneDotPerLineVisitorAdapter(toAdd).visit(compilationUnit, null);
-        new SmallEntitiesVisitorAdapter(toAdd).visit(compilationUnit, null);
-        new TwoOrFewerFieldsVisitorAdapter(toAdd).visit(compilationUnit, null);
-        new NoGettersSettersVisitorAdapter(toAdd).visit(compilationUnit, null);
+    private static ViolationMonitor visitAll(CompilationUnit compilationUnit,ViolationMonitor toAdd,File sourceFile) {
+        new SingleLevelOfIndentationVisitorAdapter(toAdd,sourceFile).visit(compilationUnit,null);
+        new NoElseKeywordVisitorAdapter(toAdd,sourceFile).visit(compilationUnit,null);
+        new WrapAllPrimitivesAndStringsVisitorAdapter(toAdd,sourceFile).visit(compilationUnit,null);
+        new FirstClassCollectionsVisitorAdapter(toAdd,sourceFile).visit(compilationUnit,null);
+        new OneDotPerLineVisitorAdapter(toAdd,sourceFile).visit(compilationUnit, null);
+        new SmallEntitiesVisitorAdapter(toAdd,sourceFile).visit(compilationUnit, null);
+        new TwoOrFewerFieldsVisitorAdapter(toAdd,sourceFile).visit(compilationUnit, null);
+        new NoGettersSettersVisitorAdapter(toAdd,sourceFile).visit(compilationUnit, null);
 
         return toAdd;
     }
