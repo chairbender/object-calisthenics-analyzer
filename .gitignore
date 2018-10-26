@@ -4,4 +4,4 @@
 .settings/*
 .vscode/
 bin/*
-build/*.gradle
+build/*
