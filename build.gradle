@@ -2,7 +2,9 @@ group 'com.chairbender'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin:'application'
 
+mainClassName = "com.chairbender.object_calisthenics_analyzer.ObjectCalisthenicsAnalyzer"
 sourceCompatibility = 1.8
 
 repositories {
@@ -23,6 +25,7 @@ task copyToLib(type: Copy) {
     into "$buildDir/output/lib"
     from configurations.runtime
 }
+
 
 jar {
     manifest {
