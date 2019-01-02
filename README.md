@@ -56,3 +56,11 @@ and _getBonus()_ and then calling _BankAccount.setValue()_ with the value of tha
 
 ## Contributing
 Please create issues to send me any suggestions you have for improving the API or any problems you encounter while using it.
+
+### Getting started:
+
+Here is a sample command to check a project:
+
+```
+gradle run --args="/Users/christophereyre/projects/game-of-life/src/main"
+```
